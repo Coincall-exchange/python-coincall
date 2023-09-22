@@ -25,3 +25,28 @@ https://github.com/Coincall-exchange/python-coincall
 ```python
 pip install python-coincall
 ```
+
+#### Step 3: Run examples
+
+- availabel modules
+```python 
+from coincall import User, Public, Futures, Options, Referral
+```
+
+- fill in API credentials when use a module with a SIGNED endpoint:
+```python
+api_key = 'Your API Key'
+api_secret_key = 'Your API Secret'
+```
+
+- public module usage:
+```python
+publicApi = Public.PublicAPI()
+print(publicApi.get_server_time())
+```
+
+- SIGNED endpoint module:
+```python
+userApi = User.UserAPI(api_key, api_secret_key)
+print(userApi.get_user_info())
+```
