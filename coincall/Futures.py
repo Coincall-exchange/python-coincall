@@ -36,6 +36,28 @@ class FuturesAPI(Client):
         url_path = "/open/futures/order/orderbook/v1/{}".format(symbol)
         return self._request("GET", url_path, params)
     
+    def get_kline(self, symbol, period,start,end,limit=None):
+        """
+        |
+        | **Get Kline**
+        | *Query for historical klines (also known as candles/candlesticks).*
+
+        :API endpoint: ``GET /open/futures/market/kline/history/v2/{symbol}``
+        :API doc: https://docs.coincall.com/#futures-endpoint-kline-signed
+        :Parameter: query string
+        |
+        """
+
+        params = {
+            'period':period,
+            'start':start,
+            'end':end
+        }
+        if limit:
+            params['limit'] = limit
+        url_path = "/open/futures/market/kline/history/v2/{}".format(symbol)
+        return self._request("GET", url_path, params)
+    
     def get_lasttrade(self, symbol):
         """
         |
@@ -60,7 +82,7 @@ class FuturesAPI(Client):
 
         :API endpoint: ``GET /open/futures/leverage/current/v1``
         :API doc: https://docs.coincall.com/#futures-endpoint-get-leverage-signed
-        :Parameter: query string
+        :Parameter: request body
         |
         """
 
@@ -104,7 +126,7 @@ class FuturesAPI(Client):
         url_path = "/open/futures/position/get/v1"
         return self._request("GET", url_path, params)
     
-    def place_order(self, symbol, qty, tradeSide, tradeType, clientOrderId=None, price=None):
+    def place_order(self, symbol, qty, tradeSide, tradeType, clientOrderId=None, price=None, timeInForce=None):
         """
         |
         | **Place Order**
@@ -126,6 +148,8 @@ class FuturesAPI(Client):
             params['clientOrderId'] = clientOrderId
         if price:
             params['price'] = price
+        if timeInForce:
+            params['timeInForce'] = timeInForce
         url_path = "/open/futures/order/create/v1"
         return self._request("POST", url_path, params)
     
@@ -173,7 +197,7 @@ class FuturesAPI(Client):
 
         :API endpoint: ``GET /open/futures/order/pending/v1``
         :API doc: https://docs.coincall.com/#futures-endpoint-get-open-orders-signed
-        :Parameter: query string
+        :Parameter: request body
         |
         """
 
@@ -194,7 +218,7 @@ class FuturesAPI(Client):
 
         :API endpoint: ``GET /open/futures/order/singleQuery/v1``
         :API doc: https://docs.coincall.com/#futures-endpoint-get-order-info-signed
-        :Parameter: query string
+        :Parameter: request body
         |
         """
 
@@ -214,7 +238,7 @@ class FuturesAPI(Client):
 
         :API endpoint: ``GET /open/futures/order/history/v1/{}``
         :API doc: https://docs.coincall.com/#futures-endpoint-get-order-info-signed
-        :Parameter: query string
+        :Parameter: request body
         |
         """
 
@@ -238,7 +262,7 @@ class FuturesAPI(Client):
 
         :API endpoint: ``GET /open/futures/trade/history/v1``
         :API doc: https://docs.coincall.com/#futures-endpoint-get-transaction-details-signed
-        :Parameter: query string
+        :Parameter: request body
         |
         """
 

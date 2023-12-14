@@ -43,6 +43,7 @@ class PublicAPI(Client):
 
         :API endpoint: ``GET /open/public/fundingRate/v1``
         :API doc: https://docs.coincall.com/#public-endpoints-get-funding-rate
+        :Parameter: request body
         |
         """
         params = {}

@@ -57,14 +57,3 @@ def parse_params_to_str(params):
 def get_timestamp():
     return int(time.time() * 1000)
 
-
-def signature(timestamp, method, request_path, body, secret_key):
-    if str(body) == '{}' or str(body) == 'None':
-        body = ''
-    message = str(timestamp) + str.upper(method) + request_path + str(body)
-
-    mac = hmac.new(bytes(secret_key, encoding='utf8'), bytes(
-        message, encoding='utf-8'), digestmod='sha256')
-    d = mac.digest()
-
-    return base64.b64encode(d)

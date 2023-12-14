@@ -13,7 +13,7 @@ class ReferralAPI(Client):
 
         :API endpoint: ``GET /open/referral/sub/v1``
         :API doc: https://docs.coincall.com/#referrals-referrals-record-signed
-        :Parameter: query string
+        :Parameter: request body
         |
         """
 

@@ -40,7 +40,7 @@ class Client(object):
             print('url:', request_path)
         if response.status_code != httpx.codes.OK:
             print(response.text)
-        return response.json()
+        return json.dumps(response.json())
 
     def _request_without_params(self, method, request_path):
         return self._request(method, request_path, {})

@@ -95,7 +95,6 @@ class OptionsAPI(Client):
 
         :API endpoint: ``GET /open/option/position/get/v1``
         :API doc: https://docs.coincall.com/#options-endpoint-get-positions-signed
-        :Parameter: query string
         |
         """
 
@@ -172,7 +171,7 @@ class OptionsAPI(Client):
 
         :API endpoint: ``GET /open/option/order/pending/v1``
         :API doc: https://docs.coincall.com/#options-endpoint-get-open-orders-signed
-        :Parameter: query string
+        :Parameter: request body
         |
         """
 
@@ -193,7 +192,7 @@ class OptionsAPI(Client):
 
         :API endpoint: ``GET /open/option/order/singleQuery/v1``
         :API doc: https://docs.coincall.com/#options-endpoint-get-order-info-signed
-        :Parameter: query string
+        :Parameter: request body
         |
         """
 
@@ -213,7 +212,7 @@ class OptionsAPI(Client):
 
         :API endpoint: ``GET /open/option/order/history/v1/{}``
         :API doc: https://docs.coincall.com/#options-endpoint-get-order-details-signed
-        :Parameter: query string
+        :Parameter: request body
         |
         """
 
@@ -237,7 +236,7 @@ class OptionsAPI(Client):
 
         :API endpoint: ``GET /open/option/trade/history/v1``
         :API doc: https://docs.coincall.com/#options-endpoint-get-transaction-details-signed
-        :Parameter: query string
+        :Parameter: request body
         |
         """
 
