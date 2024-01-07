@@ -1,9 +1,19 @@
 from .client import Client
 
-class PublicAPI(Client):
 
-    def __init__(self, api_key='-1', api_secret_key='-1', diff='3000', use_server_time=False, domain = 'https://api.coincall.com',debug = True):
-        Client.__init__(self, api_key, api_secret_key, diff, use_server_time, domain, debug)
+class PublicAPI(Client):
+    def __init__(
+        self,
+        api_key="-1",
+        api_secret_key="-1",
+        diff="3000",
+        use_server_time=False,
+        domain="https://api.coincall.com",
+        debug=True,
+    ):
+        Client.__init__(
+            self, api_key, api_secret_key, diff, use_server_time, domain, debug
+        )
 
     def get_server_time(self):
         """

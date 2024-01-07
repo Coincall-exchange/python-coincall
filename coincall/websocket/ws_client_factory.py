@@ -1,17 +1,18 @@
 from autobahn.twisted.websocket import WebSocketClientFactory
 from twisted.internet.protocol import ReconnectingClientFactory
 
-from .WsClientProtocol import *
+from .ws_client_protocol import *
 
 
 class WsReconnectingClientFactory(ReconnectingClientFactory):
     """
-        @ivar maxDelay: Maximum number of seconds between connection attempts.
-        @ivar initialDelay: Delay for the first reconnection attempt.
-        @ivar maxRetries: Maximum number of consecutive unsuccessful connection
-            attempts, after which no further connection attempts will be made. If
-            this is not explicitly set, no maximum is applied.
-        """
+    @ivar maxDelay: Maximum number of seconds between connection attempts.
+    @ivar initialDelay: Delay for the first reconnection attempt.
+    @ivar maxRetries: Maximum number of consecutive unsuccessful connection
+        attempts, after which no further connection attempts will be made. If
+        this is not explicitly set, no maximum is applied.
+    """
+
     initialDelay = 0.1
     maxDelay = 2
     maxRetries = 5
@@ -32,14 +33,20 @@ class WsClientFactory(WebSocketClientFactory, WsReconnectingClientFactory):
 
     def clientConnectionFailed(self, connector, reason):
         self.logger.error(
-            "Can't connect to server. Reason: {}. Retrying: {}".format(reason, self.retries + 1))
+            "Can't connect to server. Reason: {}. Retrying: {}".format(
+                reason, self.retries + 1
+            )
+        )
         self.retry(connector)
         if self.retries > self.maxRetries:
             self.callback(self.reachMaxRetriesError)
 
     def clientConnectionLost(self, connector, reason):
-        self.logger.error("WsClientFactory execute clientConnectionLost. Reason: {},retried {} times".format(reason,
-                                                                                                             self.retries + 1))
+        self.logger.error(
+            "WsClientFactory execute clientConnectionLost. Reason: {},retried {} times".format(
+                reason, self.retries + 1
+            )
+        )
         self.retry(connector)
         if self.retries > self.maxRetries:
             self.callback(self.reachMaxRetriesError)

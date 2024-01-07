@@ -1,9 +1,19 @@
 from .client import Client
 
-class SpotAPI(Client):
 
-    def __init__(self, api_key='-1', api_secret_key='-1', diff='3000', use_server_time=False, domain = 'https://api.coincall.com',debug = True):
-        Client.__init__(self, api_key, api_secret_key, diff, use_server_time, domain, debug)
+class SpotAPI(Client):
+    def __init__(
+        self,
+        api_key="-1",
+        api_secret_key="-1",
+        diff="3000",
+        use_server_time=False,
+        domain="https://api.coincall.com",
+        debug=True,
+    ):
+        Client.__init__(
+            self, api_key, api_secret_key, diff, use_server_time, domain, debug
+        )
 
     def get_symbols(self, symbol=None, limit=None):
         """
@@ -16,15 +26,15 @@ class SpotAPI(Client):
         :Parameter: request body
         |
         """
-        params = {} 
+        params = {}
         if symbol:
             params["symbol"] = symbol
         if limit:
             params["limit"] = limit
         url_path = "/open/spot/market/instruments"
         return self._request("GET", url_path, params)
-    
-    def get_kline(self, symbol,interval,start=None,end=None, limit=None):
+
+    def get_kline(self, symbol, interval, start=None, end=None, limit=None):
         """
         |
         | **Get Kline**
@@ -35,10 +45,7 @@ class SpotAPI(Client):
         :Parameter: request body
         |
         """
-        params = {
-            "symbol": symbol,
-            "interval": interval
-        } 
+        params = {"symbol": symbol, "interval": interval}
         if start:
             params["start"] = start
         if end:
@@ -60,14 +67,12 @@ class SpotAPI(Client):
         |
         """
 
-        params = {
-            "symbol": symbol
-        }
+        params = {"symbol": symbol}
         if depth:
             params["depth"] = depth
         url_path = "/open/spot/market/orderbook"
         return self._request("GET", url_path, params)
-    
+
     def get_public_trades(self, symbol, limit=None):
         """
         |
@@ -80,14 +85,12 @@ class SpotAPI(Client):
         |
         """
 
-        params = {
-            "symbol": symbol
-        }
+        params = {"symbol": symbol}
         if limit:
             params["limit"] = limit
         url_path = "/open/spot/market/histories"
         return self._request("GET", url_path, params)
-    
+
     def get_tickers24hr(self, symbol=None):
         """
         |
@@ -105,8 +108,10 @@ class SpotAPI(Client):
             params["symbol"] = symbol
         url_path = "/open/spot/market/overviewV2"
         return self._request("GET", url_path, params)
-    
-    def place_order(self, symbol, qty, tradeSide, tradeType, clientOrderId=None, price=None):
+
+    def place_order(
+        self, symbol, qty, tradeSide, tradeType, clientOrderId=None, price=None
+    ):
         """
         |
         | **Place Order**
@@ -122,15 +127,15 @@ class SpotAPI(Client):
             "symbol": symbol,
             "qty": qty,
             "tradeSide": tradeSide,
-            "tradeType": tradeType
+            "tradeType": tradeType,
         }
         if clientOrderId:
-            params['clientOrderId'] = clientOrderId
+            params["clientOrderId"] = clientOrderId
         if price:
-            params['price'] = price
+            params["price"] = price
         url_path = "/open/spot/trade/order/v1"
         return self._request("POST", url_path, params)
-    
+
     def cancel_order(self, orderId=None, clientOrderId=None):
         """
         |
@@ -145,12 +150,12 @@ class SpotAPI(Client):
 
         params = {}
         if orderId:
-            params['orderId'] = orderId
+            params["orderId"] = orderId
         if clientOrderId:
-            params['clientOrderId'] = clientOrderId
+            params["clientOrderId"] = clientOrderId
         url_path = "/open/spot/trade/cancel/v1"
         return self._request("POST", url_path, params)
-    
+
     def cancel_orders(self, symbol):
         """
         |
@@ -163,12 +168,10 @@ class SpotAPI(Client):
         |
         """
 
-        params = {
-            "symbol": symbol
-        }
+        params = {"symbol": symbol}
         url_path = "/open/spot/trade/cancelAll/v1"
         return self._request("POST", url_path, params)
-    
+
     def get_order_info(self, orderId=None, clientOrderId=None):
         """
         |
@@ -183,12 +186,12 @@ class SpotAPI(Client):
 
         params = {}
         if orderId:
-            params['orderId'] = orderId
+            params["orderId"] = orderId
         if clientOrderId:
-            params['clientOrderId'] = clientOrderId
+            params["clientOrderId"] = clientOrderId
         url_path = "/open/spot/trade/order/v1"
         return self._request("GET", url_path, params)
-    
+
     def get_open_orders(self, symbol=None):
         """
         |
@@ -206,8 +209,8 @@ class SpotAPI(Client):
             params["symbol"] = symbol
         url_path = "/open/spot/trade/orders/v1"
         return self._request("GET", url_path, params)
-    
-    def get_all_orders(self, symbol=None,limit=None,startTime=None,endTime=None):
+
+    def get_all_orders(self, symbol=None, limit=None, startTime=None, endTime=None):
         """
         |
         | **Query All Orders**
@@ -227,11 +230,13 @@ class SpotAPI(Client):
         if startTime:
             params["startTime"] = startTime
         if endTime:
-            params["endTime"] = endTime	
+            params["endTime"] = endTime
         url_path = "/open/spot/trade/allorders/v1"
         return self._request("GET", url_path, params)
-    
-    def get_fills(self, symbol=None,orderId=None,limit=None,startTime=None,endTime=None):
+
+    def get_fills(
+        self, symbol=None, orderId=None, limit=None, startTime=None, endTime=None
+    ):
         """
         |
         | **Query Fill List**
@@ -253,6 +258,6 @@ class SpotAPI(Client):
         if startTime:
             params["startTime"] = startTime
         if endTime:
-            params["endTime"] = endTime	
+            params["endTime"] = endTime
         url_path = "/open/spot/trade/fills/v1"
         return self._request("GET", url_path, params)
