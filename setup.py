@@ -26,7 +26,5 @@ setuptools.setup(
         "requests",
         "Twisted",
         "pyOpenSSL",
-        "pytest",
-        "black",
     ],
 )

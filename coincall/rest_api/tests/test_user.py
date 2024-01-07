@@ -1,5 +1,5 @@
 import unittest
-from coincall.user import UserAPI
+from coincall.rest_api.user import UserAPI
 
 
 class UserTest(unittest.TestCase):

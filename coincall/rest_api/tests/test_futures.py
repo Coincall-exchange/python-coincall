@@ -1,5 +1,5 @@
 import unittest
-from coincall.futures import FuturesAPI
+from coincall.rest_api.futures import FuturesAPI
 
 
 class FuturesTest(unittest.TestCase):

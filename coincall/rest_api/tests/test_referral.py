@@ -1,5 +1,5 @@
 import unittest
-from coincall.referral import ReferralAPI
+from coincall.rest_api.referral import ReferralAPI
 
 
 class ReferralTest(unittest.TestCase):

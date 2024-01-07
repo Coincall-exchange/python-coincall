@@ -1,5 +1,5 @@
 import unittest
-from coincall.options import OptionsAPI
+from coincall.rest_api.options import OptionsAPI
 
 
 class OptionsTest(unittest.TestCase):

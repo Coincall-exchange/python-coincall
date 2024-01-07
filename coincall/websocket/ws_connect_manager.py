@@ -5,8 +5,8 @@ from autobahn.twisted.websocket import connectWS
 from twisted.internet import reactor
 from twisted.internet.error import ReactorAlreadyRunning
 
-from . import WsUtils
-from .WsClientFactory import *
+from . import ws_utils
+from .ws_client_factory import *
 
 
 class WsConnectManager(threading.Thread):
@@ -23,7 +23,7 @@ class WsConnectManager(threading.Thread):
     def subscribeSocket(self, args: list, callback):
         channelArgs = {}
         channelParamMap = {}
-        WsUtils.checkSocketParams(args, channelArgs, channelParamMap)
+        ws_utils.checkSocketParams(args, channelArgs, channelParamMap)
         if len(channelArgs) < 1:
             return False
         for channel in channelArgs:
@@ -47,7 +47,7 @@ class WsConnectManager(threading.Thread):
     def unsubscribeSocket(self, args: list, callback):
         channelArgs = {}
         channelParamMap = {}
-        WsUtils.checkSocketParams(args, channelArgs, channelParamMap)
+        ws_utils.checkSocketParams(args, channelArgs, channelParamMap)
         if len(channelArgs) < 1:
             return False
         for channel in channelArgs:
@@ -102,7 +102,7 @@ class WsConnectManager(threading.Thread):
         return factory
 
     def loginSocket(self, channel: str):
-        payload = WsUtils.initLoginParams(
+        payload = ws_utils.initLoginParams(
             useServerTime=self.useServerTime,
             apiKey=self.apiKey,
             passphrase=self.passphrase,
