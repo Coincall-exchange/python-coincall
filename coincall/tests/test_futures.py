@@ -1,14 +1,12 @@
 import unittest
-from coincall import Futures
+from coincall.futures import FuturesAPI
 
 
-class futuresTest(unittest.TestCase):
+class FuturesTest(unittest.TestCase):
     def setUp(self):
         api_key = "-1"
         api_secret_key = "-1"
-        self.futuresApi = Futures.FuturesAPI(
-            api_key, api_secret_key, use_server_time=False
-        )
+        self.futuresApi = FuturesAPI(api_key, api_secret_key, use_server_time=False)
 
     def test_get_symbols(self):
         print(self.futuresApi.get_symbols())

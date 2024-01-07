@@ -1,12 +1,12 @@
 import unittest
-from coincall import User
+from coincall.user import UserAPI
 
 
-class userTest(unittest.TestCase):
+class UserTest(unittest.TestCase):
     def setUp(self):
         api_key = "-1"
         api_secret_key = "-1"
-        self.userApi = User.UserAPI(api_key, api_secret_key, use_server_time=False)
+        self.userApi = UserAPI(api_key, api_secret_key, use_server_time=False)
 
     def test_get_user_info(self):
         print(self.userApi.get_user_info())

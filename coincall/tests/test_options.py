@@ -1,14 +1,12 @@
 import unittest
-from coincall import Options
+from coincall.options import OptionsAPI
 
 
-class optionsTest(unittest.TestCase):
+class OptionsTest(unittest.TestCase):
     def setUp(self):
         api_key = "-1"
         api_secret_key = "-1"
-        self.optionsApi = Options.OptionsAPI(
-            api_key, api_secret_key, use_server_time=False
-        )
+        self.optionsApi = OptionsAPI(api_key, api_secret_key, use_server_time=False)
 
     def test_get_instruments(self):
         print(self.optionsApi.get_instruments("BTC"))
