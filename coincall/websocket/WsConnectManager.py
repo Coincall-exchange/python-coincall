@@ -10,7 +10,6 @@ from .WsClientFactory import *
 
 
 class WsConnectManager(threading.Thread):
-
     def __init__(self, url, isPrivate):
         threading.Thread.__init__(self)
         self.factories = {}
@@ -34,10 +33,14 @@ class WsConnectManager(threading.Thread):
                 if privateKey not in self.factories:
                     reactor.callFromThread(self.loginSocket, channel)
                     time.sleep(2)
-                    newFactory = self.initSubscribeFactory(args=channelArgs[channel], subSet=subSet, callback=callback)
+                    newFactory = self.initSubscribeFactory(
+                        args=channelArgs[channel], subSet=subSet, callback=callback
+                    )
                     reactor.callFromThread(self.resetConnection, newFactory, channel)
                     continue
-            factory = self.initSubscribeFactory(args=channelArgs[channel], subSet=subSet, callback=callback)
+            factory = self.initSubscribeFactory(
+                args=channelArgs[channel], subSet=subSet, callback=callback
+            )
             self.factories[channel] = factory
             reactor.callFromThread(self.addConnection, channel)
 
@@ -59,8 +62,10 @@ class WsConnectManager(threading.Thread):
             if len(ifFiledParams) < 1:
                 self.disconnect(channel)
             else:
-                payload = json.dumps({"op": "unsubscribe", "args": channelArgs[channel]}, ensure_ascii=False).encode(
-                    "utf8")
+                payload = json.dumps(
+                    {"op": "unsubscribe", "args": channelArgs[channel]},
+                    ensure_ascii=False,
+                ).encode("utf8")
                 factory = WsClientFactory(self.url, payload=payload)
                 factory.client = self
                 factory.protocol = WsClientProtocol
@@ -73,7 +78,9 @@ class WsConnectManager(threading.Thread):
 
     def disconnect(self, channel):
         if channel not in self.conns:
-            self.logger.error("WsConnectManager disconnect error,channel is not able".format(channel))
+            self.logger.error(
+                "WsConnectManager disconnect error,channel is not able".format(channel)
+            )
             return
         self.conns[channel].factory = WebSocketClientFactory(self.url)
         self.conns[channel].disconnect()
@@ -84,8 +91,9 @@ class WsConnectManager(threading.Thread):
         del self.factories[privateKey]
 
     def initSubscribeFactory(self, args, subSet: set, callback):
-        payload = json.dumps({"op": "subscribe", "args": args}, ensure_ascii=False).encode(
-            "utf8")
+        payload = json.dumps(
+            {"op": "subscribe", "args": args}, ensure_ascii=False
+        ).encode("utf8")
         factory = WsClientFactory(self.url, payload=payload)
         factory.payload = payload
         factory.protocol = WsClientProtocol
@@ -94,8 +102,12 @@ class WsConnectManager(threading.Thread):
         return factory
 
     def loginSocket(self, channel: str):
-        payload = WsUtils.initLoginParams(useServerTime=self.useServerTime, apiKey=self.apiKey,
-                                          passphrase=self.passphrase, secretKey=self.secretKey)
+        payload = WsUtils.initLoginParams(
+            useServerTime=self.useServerTime,
+            apiKey=self.apiKey,
+            passphrase=self.passphrase,
+            secretKey=self.secretKey,
+        )
         factory = WsClientFactory(self.url, payload=payload)
         factory.protocol = WsClientProtocol
         factory.callback = loginSocketCallBack

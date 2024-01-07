@@ -34,8 +34,10 @@ class WsClientProtocol(WebSocketClientProtocol):
 
     def onClose(self, wasClean, code, reason):
         self.logger.info(
-            "WsClientProtocol WS connection will be closed; wasClean={0}, code={1}, reason: {2}".format(wasClean, code,
-                                                                                                        reason))
+            "WsClientProtocol WS connection will be closed; wasClean={0}, code={1}, reason: {2}".format(
+                wasClean, code, reason
+            )
+        )
 
     def onPing(self, payload):
         self.logger.info("WsClientProtocol execute onPing")
