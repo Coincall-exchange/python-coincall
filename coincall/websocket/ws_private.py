@@ -1,13 +1,16 @@
-
 from twisted.internet import reactor
 
-from . import WsUtils
-from .WsConnectManager import WsConnectManager
+from . import ws_utils
+from .ws_connect_manager import WsConnectManager
 
 
 class WsPrivate(WsConnectManager):
     def __init__(self, apiKey: str, passphrase: str, url: str, useServerTime: False):
-        if ~WsUtils.isNotBlankStr(apiKey) or ~WsUtils.isNotBlankStr(passphrase) or ~WsUtils.isNotBlankStr(url):
+        if (
+            ~ws_utils.isNotBlankStr(apiKey)
+            or ~ws_utils.isNotBlankStr(passphrase)
+            or ~ws_utils.isNotBlankStr(url)
+        ):
             return
         super().__init__(url, isPrivate=True)
         self.apiKey = apiKey
@@ -25,4 +28,3 @@ class WsPrivate(WsConnectManager):
             self.close()
         finally:
             reactor.stop()
-

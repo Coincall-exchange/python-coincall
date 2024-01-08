@@ -1,5 +1,6 @@
 import setuptools
 import coincall
+
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
@@ -12,7 +13,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://docs.coincall.com",
-    packages=setuptools.find_packages(),
+    packages=["coincall"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
@@ -24,6 +25,6 @@ setuptools.setup(
         "keyring",
         "requests",
         "Twisted",
-        "pyOpenSSL"
-    ]
+        "pyOpenSSL",
+    ],
 )

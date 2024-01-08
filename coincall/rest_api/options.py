@@ -1,9 +1,19 @@
 from .client import Client
 
-class OptionsAPI(Client):
 
-    def __init__(self, api_key='-1', api_secret_key='-1', diff='3000', use_server_time=False, domain = 'https://api.coincall.com',debug = True):
-        Client.__init__(self, api_key, api_secret_key, diff, use_server_time, domain, debug)
+class OptionsAPI(Client):
+    def __init__(
+        self,
+        api_key="-1",
+        api_secret_key="-1",
+        diff="3000",
+        use_server_time=False,
+        domain="https://api.coincall.com",
+        debug=True,
+    ):
+        Client.__init__(
+            self, api_key, api_secret_key, diff, use_server_time, domain, debug
+        )
 
     def get_instruments(self, base):
         """
@@ -20,7 +30,7 @@ class OptionsAPI(Client):
         params = {}
         url_path = "/open/option/getInstruments/{}".format(base)
         return self._request("GET", url_path, params)
-    
+
     def get_options_by_endtime(self, index, endTime):
         """
         |
@@ -33,12 +43,10 @@ class OptionsAPI(Client):
         |
         """
 
-        params = {
-            "endTime": endTime
-        }
+        params = {"endTime": endTime}
         url_path = "/open/option/get/v1/{}".format(index)
         return self._request("GET", url_path, params)
-    
+
     def get_option_by_name(self, symbol):
         """
         |
@@ -54,7 +62,7 @@ class OptionsAPI(Client):
         params = {}
         url_path = "/open/option/detail/v1/{}".format(symbol)
         return self._request("GET", url_path, params)
-    
+
     def get_depth(self, symbol):
         """
         |
@@ -70,7 +78,7 @@ class OptionsAPI(Client):
         params = {}
         url_path = "/open/option/order/orderbook/v1/{}".format(symbol)
         return self._request("GET", url_path, params)
-    
+
     def get_lasttrade(self, symbol):
         """
         |
@@ -86,7 +94,7 @@ class OptionsAPI(Client):
         params = {}
         url_path = "/open/option/trade/lasttrade/v1/{}".format(symbol)
         return self._request("GET", url_path, params)
-    
+
     def get_positions(self):
         """
         |
@@ -101,8 +109,10 @@ class OptionsAPI(Client):
         params = {}
         url_path = "/open/option/position/get/v1"
         return self._request("GET", url_path, params)
-    
-    def place_order(self, symbol, qty, tradeSide, tradeType, clientOrderId=None, price=None):
+
+    def place_order(
+        self, symbol, qty, tradeSide, tradeType, clientOrderId=None, price=None
+    ):
         """
         |
         | **Place Order**
@@ -118,15 +128,15 @@ class OptionsAPI(Client):
             "symbol": symbol,
             "qty": qty,
             "tradeSide": tradeSide,
-            "tradeType": tradeType
+            "tradeType": tradeType,
         }
         if clientOrderId:
-            params['clientOrderId'] = clientOrderId
+            params["clientOrderId"] = clientOrderId
         if price:
-            params['price'] = price
+            params["price"] = price
         url_path = "/open/option/order/create/v1"
         return self._request("POST", url_path, params)
-    
+
     def cancel_order(self, orderId=None, clientOrderId=None):
         """
         |
@@ -141,13 +151,13 @@ class OptionsAPI(Client):
 
         params = {}
         if orderId:
-            params['orderId'] = orderId
+            params["orderId"] = orderId
         if clientOrderId:
-            params['clientOrderId'] = clientOrderId
+            params["clientOrderId"] = clientOrderId
         url_path = "/open/option/order/cancel/v1"
         return self._request("POST", url_path, params)
-    
-    def cancel_orders(self, symbol, version='v1'):
+
+    def cancel_orders(self, symbol, version="v1"):
         """
         |
         | **Cancel Orders**
@@ -160,9 +170,9 @@ class OptionsAPI(Client):
         """
 
         params = {}
-        url_path = "/open/option/order/cancelOpenOrders/{}/{}".format(version,symbol)
+        url_path = "/open/option/order/cancelOpenOrders/{}/{}".format(version, symbol)
         return self._request("GET", url_path, params)
-    
+
     def get_open_orders(self, symbol=None, page=1, pageSize=20):
         """
         |
@@ -175,15 +185,12 @@ class OptionsAPI(Client):
         |
         """
 
-        params = {
-            "page": page,
-            "pageSize": pageSize
-        }
+        params = {"page": page, "pageSize": pageSize}
         if symbol:
             params["symbol"] = symbol
         url_path = "/open/option/order/pending/v1"
         return self._request("GET", url_path, params)
-    
+
     def get_order_by_id(self, orderId=None, clientOrderId=None):
         """
         |
@@ -198,12 +205,12 @@ class OptionsAPI(Client):
 
         params = {}
         if orderId:
-            params['orderId'] = orderId
+            params["orderId"] = orderId
         if clientOrderId:
-            params['clientOrderId'] = clientOrderId
+            params["clientOrderId"] = clientOrderId
         url_path = "/open/option/order/singleQuery/v1"
         return self._request("GET", url_path, params)
-    
+
     def get_order_history(self, fromId=None, startTime=None, endTime=None, pageSize=10):
         """
         |
@@ -216,19 +223,19 @@ class OptionsAPI(Client):
         |
         """
 
-        params = {
-            "pageSize": pageSize
-        }
+        params = {"pageSize": pageSize}
         if fromId:
-            params['fromId'] = fromId
+            params["fromId"] = fromId
         if startTime:
-            params['startTime'] = startTime
+            params["startTime"] = startTime
         if endTime:
-            params['endTime'] = endTime
+            params["endTime"] = endTime
         url_path = "/open/option/order/history/v1"
         return self._request("GET", url_path, params)
 
-    def get_trade_history(self, fromId=None, startTime=None, endTime=None, pageSize=None):
+    def get_trade_history(
+        self, fromId=None, startTime=None, endTime=None, pageSize=None
+    ):
         """
         |
         | **Get Transaction details**
@@ -242,12 +249,12 @@ class OptionsAPI(Client):
 
         params = {}
         if fromId:
-            params['fromId'] = fromId
+            params["fromId"] = fromId
         if startTime:
-            params['startTime'] = startTime
+            params["startTime"] = startTime
         if endTime:
-            params['endTime'] = endTime
+            params["endTime"] = endTime
         if pageSize:
-            params['pageSize'] = pageSize
+            params["pageSize"] = pageSize
         url_path = "/open/option/trade/history/v1"
         return self._request("GET", url_path, params)

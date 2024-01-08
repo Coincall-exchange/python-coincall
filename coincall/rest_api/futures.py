@@ -1,9 +1,19 @@
 from .client import Client
 
-class FuturesAPI(Client):
 
-    def __init__(self, api_key='-1', api_secret_key='-1', diff='3000', use_server_time=False, domain = 'https://api.coincall.com',debug = True):
-        Client.__init__(self, api_key, api_secret_key, diff, use_server_time, domain, debug)
+class FuturesAPI(Client):
+    def __init__(
+        self,
+        api_key="-1",
+        api_secret_key="-1",
+        diff="3000",
+        use_server_time=False,
+        domain="https://api.coincall.com",
+        debug=True,
+    ):
+        Client.__init__(
+            self, api_key, api_secret_key, diff, use_server_time, domain, debug
+        )
 
     def get_symbols(self):
         """
@@ -19,7 +29,7 @@ class FuturesAPI(Client):
         params = {}
         url_path = "/open/futures/market/symbol/v1"
         return self._request("GET", url_path, params)
-    
+
     def get_depth(self, symbol):
         """
         |
@@ -35,8 +45,8 @@ class FuturesAPI(Client):
         params = {}
         url_path = "/open/futures/order/orderbook/v1/{}".format(symbol)
         return self._request("GET", url_path, params)
-    
-    def get_kline(self, symbol, period,start,end,limit=None):
+
+    def get_kline(self, symbol, period, start, end, limit=None):
         """
         |
         | **Get Kline**
@@ -48,16 +58,12 @@ class FuturesAPI(Client):
         |
         """
 
-        params = {
-            'period':period,
-            'start':start,
-            'end':end
-        }
+        params = {"period": period, "start": start, "end": end}
         if limit:
-            params['limit'] = limit
+            params["limit"] = limit
         url_path = "/open/futures/market/kline/history/v2/{}".format(symbol)
         return self._request("GET", url_path, params)
-    
+
     def get_lasttrade(self, symbol):
         """
         |
@@ -73,7 +79,7 @@ class FuturesAPI(Client):
         params = {}
         url_path = "/open/futures/trade/lasttrade/v1/{}".format(symbol)
         return self._request("GET", url_path, params)
-    
+
     def get_leverage(self, symbol):
         """
         |
@@ -86,12 +92,10 @@ class FuturesAPI(Client):
         |
         """
 
-        params = {
-            "symbol": symbol
-        }
+        params = {"symbol": symbol}
         url_path = "/open/futures/leverage/current/v1"
         return self._request("GET", url_path, params)
-    
+
     def set_leverage(self, symbol, leverage):
         """
         |
@@ -104,13 +108,10 @@ class FuturesAPI(Client):
         |
         """
 
-        params = {
-            "symbol": symbol,
-            "leverage": leverage
-        }
+        params = {"symbol": symbol, "leverage": leverage}
         url_path = "/open/futures/leverage/set/v1"
         return self._request("POST", url_path, params)
-    
+
     def get_positions(self):
         """
         |
@@ -125,8 +126,17 @@ class FuturesAPI(Client):
         params = {}
         url_path = "/open/futures/position/get/v1"
         return self._request("GET", url_path, params)
-    
-    def place_order(self, symbol, qty, tradeSide, tradeType, clientOrderId=None, price=None, timeInForce=None):
+
+    def place_order(
+        self,
+        symbol,
+        qty,
+        tradeSide,
+        tradeType,
+        clientOrderId=None,
+        price=None,
+        timeInForce=None,
+    ):
         """
         |
         | **Place Order**
@@ -142,17 +152,17 @@ class FuturesAPI(Client):
             "symbol": symbol,
             "qty": qty,
             "tradeSide": tradeSide,
-            "tradeType": tradeType
+            "tradeType": tradeType,
         }
         if clientOrderId:
-            params['clientOrderId'] = clientOrderId
+            params["clientOrderId"] = clientOrderId
         if price:
-            params['price'] = price
+            params["price"] = price
         if timeInForce:
-            params['timeInForce'] = timeInForce
+            params["timeInForce"] = timeInForce
         url_path = "/open/futures/order/create/v1"
         return self._request("POST", url_path, params)
-    
+
     def cancel_order(self, orderId=None, clientOrderId=None):
         """
         |
@@ -167,13 +177,13 @@ class FuturesAPI(Client):
 
         params = {}
         if orderId:
-            params['orderId'] = orderId
+            params["orderId"] = orderId
         if clientOrderId:
-            params['clientOrderId'] = clientOrderId
+            params["clientOrderId"] = clientOrderId
         url_path = "/open/futures/order/cancel/v1"
         return self._request("POST", url_path, params)
-    
-    def cancel_orders(self, symbol, version='v1'):
+
+    def cancel_orders(self, symbol, version="v1"):
         """
         |
         | **Cancel Orders**
@@ -186,9 +196,9 @@ class FuturesAPI(Client):
         """
 
         params = {}
-        url_path = "/open/futures/order/cancelOpenOrders/{}/{}".format(version,symbol)
+        url_path = "/open/futures/order/cancelOpenOrders/{}/{}".format(version, symbol)
         return self._request("GET", url_path, params)
-    
+
     def get_open_orders(self, symbol=None, page=1, pageSize=20):
         """
         |
@@ -201,15 +211,12 @@ class FuturesAPI(Client):
         |
         """
 
-        params = {
-            "page": page,
-            "pageSize": pageSize
-        }
+        params = {"page": page, "pageSize": pageSize}
         if symbol:
             params["symbol"] = symbol
         url_path = "/open/futures/order/pending/v1"
         return self._request("GET", url_path, params)
-    
+
     def get_order_by_id(self, orderId=None, clientOrderId=None):
         """
         |
@@ -224,12 +231,12 @@ class FuturesAPI(Client):
 
         params = {}
         if orderId:
-            params['orderId'] = orderId
+            params["orderId"] = orderId
         if clientOrderId:
-            params['clientOrderId'] = clientOrderId
+            params["clientOrderId"] = clientOrderId
         url_path = "/open/futures/order/singleQuery/v1"
         return self._request("GET", url_path, params)
-    
+
     def get_order_history(self, fromId=None, startTime=None, endTime=None, pageSize=20):
         """
         |
@@ -242,19 +249,19 @@ class FuturesAPI(Client):
         |
         """
 
-        params = {
-            "pageSize": pageSize
-        }
+        params = {"pageSize": pageSize}
         if fromId:
-            params['fromId'] = fromId
+            params["fromId"] = fromId
         if startTime:
-            params['startTime'] = startTime
+            params["startTime"] = startTime
         if endTime:
-            params['endTime'] = endTime
+            params["endTime"] = endTime
         url_path = "/open/futures/order/history/v1"
         return self._request("GET", url_path, params)
 
-    def get_trade_history(self, fromId=None, startTime=None, endTime=None, pageSize=None):
+    def get_trade_history(
+        self, fromId=None, startTime=None, endTime=None, pageSize=None
+    ):
         """
         |
         | **Get Transaction details**
@@ -268,14 +275,12 @@ class FuturesAPI(Client):
 
         params = {}
         if fromId:
-            params['fromId'] = fromId
+            params["fromId"] = fromId
         if startTime:
-            params['startTime'] = startTime
+            params["startTime"] = startTime
         if endTime:
-            params['endTime'] = endTime
+            params["endTime"] = endTime
         if pageSize:
-            params['pageSize'] = pageSize
+            params["pageSize"] = pageSize
         url_path = "/open/futures/trade/history/v1"
         return self._request("GET", url_path, params)
-
-        
