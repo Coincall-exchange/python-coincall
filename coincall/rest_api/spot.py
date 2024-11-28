@@ -163,7 +163,7 @@ class SpotAPI(Client):
         | *Cancels all active orders on one symbol.*
 
         :API endpoint: ``POST /open/spot/trade/cancelAll/v1``
-        :API doc: GET https://docs.coincall.com/#spot-endpoint-cancel-orders-signed
+        :API doc: https://docs.coincall.com/#spot-endpoint-cancel-orders-signed
         :Parameter: request body
         |
         """

@@ -15,6 +15,50 @@ class OptionsAPI(Client):
             self, api_key, api_secret_key, diff, use_server_time, domain, debug
         )
 
+    def place_batch_orders(self, symbol, qty, tradeSide, tradeType, clientOrderId=None, price=None,stp=None):
+        """
+        |
+        | **Place Order**
+        | *Place an option order.*
+
+        :API endpoint: ``POST /open/option/order/batchCreate/v1``
+        :API doc: https://docs.coincall.com/#options-endpoint-batch-create-order-signed
+        :Parameter: request body
+        |
+        """
+
+        params = {
+            "orders":[{
+                "clientOrderId": clientOrderId,
+                "symbol": symbol,
+                "qty": qty,
+                "price": price,
+                "stp": stp,
+                "tradeSide": tradeSide,
+                "tradeType": tradeType
+            }]
+            
+        }
+        url_path = "/open/option/order/batchCreate/v1"
+        return self._request("POST", url_path, params)
+    
+    def get_exercise_history(self,symbol):
+        """
+        |
+        | **Get Funding Rate History**
+        | *Get Funding Rate History.*
+
+        :API endpoint: ``GET /open/settle/exercise/history/v1``
+        :API doc: https://docs.coincall.com/#options-endpoint-get-exercise-details-signed
+        |
+        """
+
+        params = {
+            'symbol':symbol
+        }
+        url_path = "/open/settle/exercise/history/v1"
+        return self._request("GET", url_path, params)
+
     def get_instruments(self, base):
         """
         |

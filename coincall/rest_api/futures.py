@@ -15,6 +15,57 @@ class FuturesAPI(Client):
             self, api_key, api_secret_key, diff, use_server_time, domain, debug
         )
 
+    def get_funding_rate_history(self,symbol):
+        """
+        |
+        | **Get Funding Rate History**
+        | *Get Funding Rate History.*
+
+        :API endpoint: ``GET /open/futures/market/symbol/v1``
+        :API doc: https://docs.coincall.com/#futures-endpoint-get-funding-rate-details-signed
+        |
+        """
+
+        params = {
+            'symbol':symbol
+        }
+        url_path = "/open/settle/future/record/v1"
+        return self._request("GET", url_path, params)
+
+    def get_instruments(self):
+        """
+        |
+        | **Get Symbol Information**
+        | *Get futures symbol information.*
+
+        :API endpoint: ``GET /open/futures/market/instruments/v1``
+        :API doc: https://docs.coincall.com/#futures-endpoint-get-instruments
+        |
+        """
+
+        params = {}
+        url_path = "/open/futures/market/instruments/v1"
+        return self._request("GET", url_path, params)
+    
+    def get_orderbook(self, symbol, depth=1):
+        """
+        |
+        | **Get OrderBook**
+        | *Get futures orderbook for 100 depth.*
+
+        :API endpoint: ``GET /open/futures/order/orderbook/v1/{}``
+        :API doc: https://docs.coincall.com/#futures-endpoint-get-orderbook-signed
+        :Parameter: request body
+        |
+        """
+
+        params = {
+            'symbol':symbol,
+            'depth': depth
+        }
+        url_path = "/open/futures/market/orderbook"
+        return self._request("GET", url_path, params)
+
     def get_symbols(self):
         """
         |
